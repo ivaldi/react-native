@@ -1,8 +1,10 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 package com.facebook.react.modules.storage;
@@ -11,6 +13,7 @@ import java.util.HashSet;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
+import android.os.AsyncTask;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.Arguments;
@@ -141,7 +144,7 @@ public final class AsyncStorageModule
 
         callback.invoke(null, data);
       }
-    }.execute();
+    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
   /**
@@ -186,7 +189,7 @@ public final class AsyncStorageModule
             statement.clearBindings();
             statement.bindString(1, keyValueArray.getArray(idx).getString(0));
             statement.bindString(2, keyValueArray.getArray(idx).getString(1));
-            statement.execute();
+            statement.execute(AsyncTask.THREAD_POOL_EXECUTOR);
           }
           mReactDatabaseSupplier.get().setTransactionSuccessful();
         } catch (Exception e) {
@@ -208,7 +211,7 @@ public final class AsyncStorageModule
           callback.invoke();
         }
       }
-    }.execute();
+    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
   /**
@@ -259,7 +262,7 @@ public final class AsyncStorageModule
           callback.invoke();
         }
       }
-    }.execute();
+    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
   /**
@@ -322,7 +325,7 @@ public final class AsyncStorageModule
           callback.invoke();
         }
       }
-    }.execute();
+    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
   /**
@@ -345,7 +348,7 @@ public final class AsyncStorageModule
           callback.invoke(AsyncStorageErrorUtil.getError(null, e.getMessage()));
         }
       }
-    }.execute();
+    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
   /**
@@ -379,7 +382,7 @@ public final class AsyncStorageModule
         }
         callback.invoke(null, data);
       }
-    }.execute();
+    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
   }
 
   /**
